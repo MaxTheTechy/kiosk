@@ -111,13 +111,13 @@ if ! ping -c 3 -W 2 $TEST_IP > /dev/null 2>&1; then
     log "WiFi link: $(iw dev $IFACE link 2>&1 | grep -E 'SSID|signal|freq')"
     log "WPA status: $(wpa_cli -i $IFACE status 2>&1 | grep -E 'wpa_state|ssid|ip')"
     log "Attempting soft fix..."
-    rc-service wpa_supplicant restart
+    /sbin/rc-service wpa_supplicant restart
     sleep 10
-    udhcpc -i $IFACE > /dev/null 2>&1
+    /sbin/udhcpc -i $IFACE > /dev/null 2>&1
     sleep 5
     if ! ping -c 3 -W 2 $TEST_IP > /dev/null 2>&1; then
         log "Soft fix failed. Rebooting..."
-        reboot
+        /sbin/reboot
     else
         log "Soft fix worked. Connectivity restored."
     fi
